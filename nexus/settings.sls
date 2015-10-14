@@ -17,6 +17,7 @@
 {%- set piddir    = g.get('piddir', p.get('piddir', '/var/run/nexus')) %}
 {%- set username  = g.get('username', p.get('username', 'nexus')) %}
 {%- set group     = g.get('group', p.get('group', 'nexus')) %}
+{%- set download_dir     = g.get('download_dir', p.get('download_dir', '/tmp/nexus_download')) %}
 {%- set port      = gc.get('port', pc.get('port', '8081')) %}
 {%- set server_name = gc.get('server_name', pc.get('server_name', grains.get('fqdn'))) %}
 
@@ -34,5 +35,5 @@
                           'home'           : home,
                           'real_home'      : real_home,
                           'server_name'    : server_name,
-                          'download_dir'   : '/tmp/nexus_download',
+                          'download_dir'   : download_dir,
                      }) %}
