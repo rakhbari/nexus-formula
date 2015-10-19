@@ -43,6 +43,14 @@ unpack-nexus-tarball:
       - file: {{ nexus.prefix }}
       - file: {{ nexus.download_dir }}
 
+{{ nexus.download_dir }}/sonatype_work:
+  file.absent
+
+move-nexus-dist:
+  cmd.run:
+    - name: mv {{ nexus.download_dir }}/nexus-* {{ nexus.real_home }}
+    - unless: test -d {{ nexus.home }}
+
 {{ nexus.real_home }}/logs:
   file.directory:
     - user: {{ nexus.username }}
@@ -56,14 +64,6 @@ unpack-nexus-tarball:
     - group: {{ nexus.group }}
     - require:
       - cmd: unpack-nexus-tarball
-
-{{ nexus.download_dir }}/sonatype_work:
-  file.absent
-
-move-nexus-dist:
-  cmd.run:
-    - name: mv {{ nexus.download_dir }}/nexus-* {{ nexus.real_home }}
-    - unless: test -d {{ nexus.home }}
 
 {{ nexus.home }}:
   file.symlink:
