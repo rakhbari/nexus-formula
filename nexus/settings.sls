@@ -10,10 +10,10 @@
 {%- endif %}
 
 {%- set version   = g.get('version', p.get('version', '2.8.0')) %}
-{%- set prefix    = g.get('prefix', p.get('prefix', '/srv/nexus')) %}
+{%- set prefix    = g.get('prefix', p.get('prefix', '/opt/nexus')) %}
 {%- set home      = prefix + '/nexus' %}
 {%- set real_home = home + '-' + version %}
-{%- set workdir   = g.get('workdir', p.get('workdir', '/srv/nexus/sonatype_work')) %}
+{%- set workdir   = g.get('workdir', p.get('workdir', prefix + '/sonatype_work')) %}
 {%- set piddir    = g.get('piddir', p.get('piddir', '/var/run/nexus')) %}
 {%- set username  = g.get('username', p.get('username', 'nexus')) %}
 {%- set group     = g.get('group', p.get('group', 'nexus')) %}
@@ -21,7 +21,7 @@
 {%- set port      = gc.get('port', pc.get('port', '8081')) %}
 {%- set server_name = gc.get('server_name', pc.get('server_name', grains.get('fqdn'))) %}
 
-{%- set source_url = g.get('source_url', p.get('source-url', 'http://www.sonatype.org/downloads/nexus-' + version + '-bundle.tar.gz')) %}
+{%- set source_url = g.get('source_url', p.get('source_url', 'http://www.sonatype.org/downloads/nexus-' + version + '-bundle.tar.gz')) %}
 
 {%- set nexus = {} %}
 {%- do nexus.update( {

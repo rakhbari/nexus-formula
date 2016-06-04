@@ -1,7 +1,9 @@
 nexus:
   version: 2.8.0
-  prefix: /srv/nexus
-  workdir: /srv/nexus/sonatype_work
+  # Optionally set source_url to download location for latest (as of this time)
+  # source_url: https://sonatype-download.global.ssl.fastly.net/nexus/3/nexus-3.0.0-03-unix.tar.gz
+  prefix: /opt/nexus
+  workdir: /opt/nexus/sonatype_work
   port: 8081
   piddir: /var/run/nexus
   username: nexus
