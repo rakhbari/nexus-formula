@@ -11,8 +11,8 @@
 
 {%- set version   = g.get('version', p.get('version', '2.8.0')) %}
 {%- set prefix    = g.get('prefix', p.get('prefix', '/opt/nexus')) %}
-{%- set home      = prefix + '/nexus' %}
-{%- set real_home = home + '-' + version %}
+{%- set home      = prefix + '/current' %}
+{%- set real_home = prefix + '/nexus-' + version %}
 {%- set workdir   = g.get('workdir', p.get('workdir', prefix + '/sonatype_work')) %}
 {%- set piddir    = g.get('piddir', p.get('piddir', '/var/run/nexus')) %}
 {%- set username  = g.get('username', p.get('username', 'nexus')) %}

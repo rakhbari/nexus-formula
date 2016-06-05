@@ -1,9 +1,8 @@
 include:
-  - sun-java
-  - sun-java.env
+  - jdk8.env
 
 {%- from 'nexus/settings.sls' import nexus with context %}
-{%- from 'sun-java/settings.sls' import java with context %}
+{%- from 'jdk8/settings.sls' import java with context %}
 
 {{ nexus.prefix }}:
   file.directory:
@@ -51,6 +50,13 @@ move-nexus-dist:
     - name: mv {{ nexus.download_dir }}/nexus-* {{ nexus.real_home }}
     - unless: test -d {{ nexus.home }}
 
+{{ nexus.real_home }}/conf:
+  file.directory:
+    - user: {{ nexus.username }}
+    - group: {{ nexus.group }}
+    - require:
+      - cmd: unpack-nexus-tarball
+
 {{ nexus.real_home }}/logs:
   file.directory:
     - user: {{ nexus.username }}
@@ -89,15 +95,17 @@ move-nexus-dist:
       nexus_home: {{ nexus.home }}
       nexus_port: {{ nexus.port }}
       nexus_workdir: {{ nexus.workdir }}
-
       java_home: {{ java.java_home }}
+    - require:
+      - file: {{ nexus.real_home }}/conf
 
 {{ nexus.home }}/bin/jsw/conf/wrapper.conf:
   file.replace:
     - pattern: wrapper.java.command=java
     - repl: wrapper.java.command={{ java.java_home }}/bin/java
+    - onlyif: 'test -f {{ nexus.home }}/bin/jsw/conf/wrapper.conf'
 
-start-nexus-service:
-  service.running:
-    - enable: true
-    - name: nexus
+#start-nexus-service:
+#  service.running:
+#    - name: nexus
+#    - enable: true
